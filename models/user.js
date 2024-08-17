@@ -1,4 +1,3 @@
-import bcrypt from "bcrypt";
 import mongoose from "mongoose";
 import { USER_ROLES } from "../globals.js";
 
@@ -11,6 +10,11 @@ export const UserSchema = new mongoose.Schema({
   lastName: {
     type: String,
     trim: true,
+  },
+  description: {
+    type: String,
+    trim: true,
+    default: "",
   },
   email: {
     type: String,
@@ -37,22 +41,5 @@ export const UserSchema = new mongoose.Schema({
     default: Date.now,
   },
 });
-
-UserSchema.pre("save", async function (next) {
-  const user = this;
-  if (!user.isModified("password")) return next();
-
-  try {
-    const salt = await bcrypt.genSalt(10);
-    user.password = await bcrypt.hash(user.password, salt);
-    next();
-  } catch (error) {
-    next(error);
-  }
-});
-
-UserSchema.methods.comparePassword = async function (candidatePassword) {
-  return await bcrypt.compare(candidatePassword, this.password);
-};
 
 export const UserModel = mongoose.model("User", UserSchema);
