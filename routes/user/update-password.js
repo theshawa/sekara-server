@@ -1,13 +1,14 @@
 import Joi from "joi";
+import { comparePassword, encryptPassword } from "../../helpers/bcrypt.js";
 import { AppError } from "../../lib/error.js";
 import { UserModel } from "../../models/user.js";
 
 const bodySchema = Joi.object({
-  newPassword: Joi.string().required(),
-  currentPassword: Joi.string().required(),
+  newPassword: Joi.string().min(6).required().label("New Password"),
+  currentPassword: Joi.string().required().label("Current Password"),
 });
 
-export const userUpdatePassword = async (req, res) => {
+export const updateUserPassword = async (req, res) => {
   const { value, error } = bodySchema.validate(req.body);
   if (error) {
     throw new AppError(400, error.message || "invalid body");
@@ -17,12 +18,17 @@ export const userUpdatePassword = async (req, res) => {
 
   const currentUser = new UserModel(req.user);
 
-  const passwordOkay = await currentUser.comparePassword(currentPassword);
+  const passwordOkay = await comparePassword(
+    currentPassword,
+    currentUser.password
+  );
   if (!passwordOkay) {
-    throw new AppError(401, "invalid current password");
+    throw new AppError(400, "invalid current password");
   }
 
-  currentUser.password = newPassword;
+  const newPasswordHash = await encryptPassword(newPassword);
+
+  currentUser.password = newPasswordHash;
   currentUser.updatedAt = Date.now();
   await currentUser.save();
 
