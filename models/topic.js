@@ -1,5 +1,8 @@
 import mongoose from "mongoose";
 
+// title is required, unique, and case-insensitive
+// articles is a number with a default value of 0
+// createdAt and updatedAt are date fields with default values
 export const TopicSchema = new mongoose.Schema({
   title: {
     type: String,

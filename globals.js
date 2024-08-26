@@ -1,3 +1,5 @@
+//  Global variables and constants
+
 export const USER_ROLES = {
   admin: "admin",
   user: "user",

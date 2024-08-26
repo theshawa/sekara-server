@@ -1,6 +1,11 @@
 import mongoose from "mongoose";
 import { USER_ROLES } from "../globals.js";
 
+// firstName, lastName, email, and password are required
+// email must be unique
+// role must be one of the values in USER_ROLES
+// createdAt and updatedAt are automatically generated
+// description is an optional field
 export const UserSchema = new mongoose.Schema({
   firstName: {
     type: String,

@@ -1,5 +1,9 @@
 import mongoose from "mongoose";
 
+// title, content, topic, and createdBy are required
+// claps is a number with a default value of 0
+// hidden is a boolean with a default value of false
+// createdAt and updatedAt are date fields with default values
 export const ArticleSchema = new mongoose.Schema({
   title: {
     type: String,
@@ -24,6 +28,10 @@ export const ArticleSchema = new mongoose.Schema({
   claps: {
     type: Number,
     default: 0,
+  },
+  hidden: {
+    type: Boolean,
+    default: false,
   },
   createdAt: {
     type: Date,
