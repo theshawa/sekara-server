@@ -13,16 +13,16 @@ userRouter.post("/sign-up", signUpUser);
 userRouter.post("/sign-in", signInUser);
 userRouter.put(
   "/update-profile",
-  authMiddleware(USER_ROLES.user, USER_ROLES.admin),
+  authMiddleware(USER_ROLES.user, USER_ROLES.user_writer, USER_ROLES.admin),
   updateUserProfile
 );
 userRouter.put(
   "/update-password",
-  authMiddleware(USER_ROLES.user, USER_ROLES.admin),
+  authMiddleware(USER_ROLES.user, USER_ROLES.user_writer, USER_ROLES.admin),
   updateUserPassword
 );
 userRouter.delete(
   "/",
-  authMiddleware(USER_ROLES.user, USER_ROLES.admin),
+  authMiddleware(USER_ROLES.user, USER_ROLES.user_writer, USER_ROLES.admin),
   deleteUser
 );
