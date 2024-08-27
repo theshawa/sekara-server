@@ -7,6 +7,7 @@ import express from "express";
 import mongoose from "mongoose";
 import { errorHanlder } from "./middlewares/error-handler.js";
 import { articlesRouter } from "./routes/articles/index.js";
+import { commentsRouter } from "./routes/comments/index.js";
 import { topicsRouter } from "./routes/topics/index.js";
 import { userRouter } from "./routes/user/index.js";
 
@@ -33,6 +34,7 @@ app.get("/", (req, res) => {
 app.use("/user", userRouter);
 app.use("/topics", topicsRouter);
 app.use("/articles", articlesRouter);
+app.use("/comments", commentsRouter);
 
 // error handler middleware to catch all errors
 app.use(errorHanlder);

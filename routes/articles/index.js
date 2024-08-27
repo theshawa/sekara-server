@@ -3,6 +3,7 @@ import { USER_ROLES } from "../../globals.js";
 import { authMiddleware } from "../../middlewares/auth.js";
 import { clapArticle } from "./clap.js";
 import { createArticle } from "./create.js";
+import { deleteArticle } from "./delete.js";
 import { getArticles } from "./get-many.js";
 import { getArticle } from "./get.js";
 
@@ -19,4 +20,9 @@ articlesRouter.post(
   "/clap/:id",
   authMiddleware(USER_ROLES.admin, USER_ROLES.user, USER_ROLES.user_writer),
   clapArticle
+);
+articlesRouter.delete(
+  "/:id",
+  authMiddleware(USER_ROLES.admin, USER_ROLES.user, USER_ROLES.user_writer),
+  deleteArticle
 );

@@ -21,11 +21,15 @@ export const getArticles = async (req, res) => {
 
   // get articles and populate createdBy and topic fields
   const articles = await ArticleModel.find(options)
-    .limit(limit)
-    .skip(page * limit) // page should start from 0
+    .limit(limit || 10)
+    .skip((page || 0) * (limit || 10)) // page should start from 0
     .populate("createdBy", "firstName lastName _id")
     .populate("topic", "title _id")
+    .sort({ createdAt: -1 })
     .exec();
 
-  res.json(articles);
+  // get total count of articles
+  const totalCount = await ArticleModel.countDocuments(options);
+
+  res.json({ articles, totalCount });
 };
