@@ -29,6 +29,10 @@ export const ArticleSchema = new mongoose.Schema({
     type: Number,
     default: 0,
   },
+  comments: {
+    type: Number,
+    default: 0,
+  },
   hidden: {
     type: Boolean,
     default: false,
