@@ -31,7 +31,7 @@ export const getComments = async (req, res) => {
     .limit(limit || 10)
     .skip(page && limit ? page * limit : 0) // page should start from 0
     .populate("createdBy", "firstName lastName _id")
-    .sort({ createdAt: -1 })
+    .sort({ createdAt: 1 })
     .exec();
 
   res.json(comments);

@@ -7,10 +7,14 @@ export const getArticles = async (req, res) => {
   };
 
   // get query parameters
-  const { page, limit, query, topic } = req.query;
+  const { page, limit, query, topic, createdBy } = req.query;
 
   if (topic) {
     options.topic = topic;
+  }
+
+  if (createdBy) {
+    options.createdBy = createdBy;
   }
 
   // search by title
