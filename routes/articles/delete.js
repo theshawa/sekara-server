@@ -17,6 +17,9 @@ export const deleteArticle = async (req, res) => {
     throw new AppError(400, "You are not allowed to delete this article");
   }
 
+  // delete comments
+  await CommentModel.deleteMany({ article: currentArticle._id });
+
   // delete article
   await currentArticle.deleteOne();
   await CommentModel.deleteMany({ article: currentArticle._id });

@@ -45,6 +45,12 @@ export const ArticleSchema = new mongoose.Schema({
     type: Date,
     default: Date.now,
   },
+  bookmarkedBy: [
+    {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "User",
+    },
+  ],
 });
 
 export const ArticleModel = mongoose.model("Article", ArticleSchema);

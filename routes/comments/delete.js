@@ -7,6 +7,7 @@ export const deleteComment = async (req, res) => {
 
   // check if comment exists
   const currentComment = await CommentModel.findById(id);
+
   if (!currentComment) {
     throw new AppError(404, "Comment not found");
   }
@@ -16,7 +17,7 @@ export const deleteComment = async (req, res) => {
     throw new AppError(400, "You are not allowed to delete this comment");
   }
 
-  // delete topic
+  // delete comment and update article comments count
   await currentComment.deleteOne();
   await ArticleModel.updateOne(
     { _id: currentComment.article },

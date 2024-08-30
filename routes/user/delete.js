@@ -6,13 +6,13 @@ export const deleteUser = async (req, res) => {
   // create user model instance
   const currentUser = new UserModel(req.user);
 
-  // delete user articles
-  await ArticleModel.deleteMany({
+  // delete user comments
+  await CommentModel.deleteMany({
     createdBy: currentUser._id,
   });
 
-  // delete user comments
-  await CommentModel.deleteMany({
+  // delete user articles
+  await ArticleModel.deleteMany({
     createdBy: currentUser._id,
   });
 
