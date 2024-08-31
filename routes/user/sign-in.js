@@ -28,7 +28,7 @@ export const signInUser = async (req, res) => {
   // check if password is correct
   const passwordOkay = await comparePassword(password, currentUser.password);
   if (!passwordOkay) {
-    throw new AppError(401, "invalid password");
+    throw new AppError(400, "invalid password");
   }
 
   // generate jwt token
