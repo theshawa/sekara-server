@@ -30,6 +30,10 @@ export const authMiddleware = (...roles) => {
       throw new AppError(401, "unauthorized");
     }
 
+    if (user.deactivated) {
+      throw new AppError(401, "unauthorized");
+    }
+
     // check if user role is allowed
     if (roles.length && !roles.includes(user.role)) {
       throw new AppError(403, "forbidden");

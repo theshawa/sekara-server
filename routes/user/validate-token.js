@@ -35,7 +35,7 @@ export const validateUserToken = async (req, res) => {
 
   // check if user exists
   const user = await UserModel.findById(decoded.userId);
-  if (!user) {
+  if (!user || user.deactivated) {
     return res.json({
       user: null,
     });

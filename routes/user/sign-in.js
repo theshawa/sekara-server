@@ -25,6 +25,10 @@ export const signInUser = async (req, res) => {
     throw new AppError(404, "user not found");
   }
 
+  if (currentUser.deactivated) {
+    throw new AppError(400, "Account deactivated");
+  }
+
   // check if password is correct
   const passwordOkay = await comparePassword(password, currentUser.password);
   if (!passwordOkay) {

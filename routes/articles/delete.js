@@ -22,7 +22,6 @@ export const deleteArticle = async (req, res) => {
 
   // delete article
   await currentArticle.deleteOne();
-  await CommentModel.deleteMany({ article: currentArticle._id });
   await TopicModel.updateOne(
     { _id: currentArticle.topic },
     { $inc: { articles: -1 } }

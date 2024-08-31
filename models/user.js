@@ -47,6 +47,10 @@ export const UserSchema = new mongoose.Schema({
     type: Date,
     default: Date.now,
   },
+  deactivated: {
+    type: Boolean,
+    default: false,
+  },
 });
 
 export const UserModel = mongoose.model("User", UserSchema);
