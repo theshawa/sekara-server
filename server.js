@@ -42,6 +42,7 @@ app.use(errorHanlder);
 // Database connection and server start
 const connectionString = process.env.ATLAS_URI || "";
 mongoose
+  .set("strictQuery", true)
   .connect(connectionString)
   .then(() => {
     console.log("Database connected");

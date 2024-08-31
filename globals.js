@@ -6,3 +6,5 @@ export const USER_ROLES = {
   user_writer: "user:writer",
   moderator: "moderator",
 };
+
+export const JWT_EXPIRATION = "1m";

@@ -27,6 +27,7 @@ export const UserSchema = new mongoose.Schema({
     unique: true,
     trim: true,
     lowercase: true,
+    match: /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/,
   },
   role: {
     type: String,
@@ -36,6 +37,7 @@ export const UserSchema = new mongoose.Schema({
   password: {
     type: String,
     required: true,
+    minlength: 6,
   },
   createdAt: {
     type: Date,

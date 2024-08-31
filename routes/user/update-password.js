@@ -1,5 +1,5 @@
 import Joi from "joi";
-import { comparePassword, encryptPassword } from "../../helpers/bcrypt.js";
+import { comparePassword, hashPassword } from "../../helpers/bcrypt.js";
 import { AppError } from "../../lib/error.js";
 import { UserModel } from "../../models/user.js";
 
@@ -31,7 +31,7 @@ export const updateUserPassword = async (req, res) => {
   }
 
   // encrypt new password
-  const newPasswordHash = await encryptPassword(newPassword);
+  const newPasswordHash = await hashPassword(newPassword);
 
   // update password
   currentUser.password = newPasswordHash;

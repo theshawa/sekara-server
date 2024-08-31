@@ -1,5 +1,5 @@
 import Joi from "joi";
-import { encryptPassword } from "../../helpers/bcrypt.js";
+import { hashPassword } from "../../helpers/bcrypt.js";
 import { AppError } from "../../lib/error.js";
 import { UserModel } from "../../models/user.js";
 
@@ -20,14 +20,8 @@ export const signUpUser = async (req, res) => {
 
   const { email, password, firstName, lastName } = value;
 
-  // check if user already exists
-  const alreadyUser = await UserModel.findOne({ email });
-  if (alreadyUser) {
-    throw new AppError(400, "user already exists");
-  }
-
   // encrypt password
-  const passwordHash = await encryptPassword(password);
+  const passwordHash = await hashPassword(password);
 
   // create user
   const user = new UserModel({

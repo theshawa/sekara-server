@@ -7,6 +7,7 @@ import { signInUser } from "./sign-in.js";
 import { signUpUser } from "./sign-up.js";
 import { updateUserPassword } from "./update-password.js";
 import { updateUserProfile } from "./update-profile.js";
+import { validateUserToken } from "./validate-token.js";
 
 export const userRouter = Router();
 
@@ -28,3 +29,4 @@ userRouter.delete(
   deleteUser
 );
 userRouter.get("/:id", getUser);
+userRouter.post("/validate-token", validateUserToken);

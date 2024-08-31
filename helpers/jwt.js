@@ -1,4 +1,5 @@
 import jwt from "jsonwebtoken";
+import { JWT_EXPIRATION } from "../globals.js";
 
 // secret key for jwt token signing and verification
 const jwtSecret = process.env.JWT_SECRET;
@@ -10,5 +11,5 @@ export const jwtVerify = (token) => {
 
 // sign jwt token
 export const jwtSign = async (userId) => {
-  return jwt.sign({ userId }, jwtSecret, { expiresIn: "1d" });
+  return jwt.sign({ userId }, jwtSecret, { expiresIn: JWT_EXPIRATION });
 };
