@@ -1,6 +1,6 @@
 import { UserModel } from "../../models/user.js";
 
-export const deactivateUser = async (req, res) => {
+export const toggleUserDeactivated = async (req, res) => {
   const id = req.params.id;
 
   // create user model instance

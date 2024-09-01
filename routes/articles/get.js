@@ -14,9 +14,9 @@ export const getArticle = async (req, res) => {
   }
 
   // check if article is hidden
-  if (article.hidden) {
-    throw new AppError(404, "article not found");
-  }
+  // if (article.hidden) {
+  //   throw new AppError(404, "article not found");
+  // }
 
   res.json(article);
 };

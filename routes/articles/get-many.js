@@ -2,9 +2,7 @@ import { ArticleModel } from "../../models/article.js";
 
 export const getArticles = async (req, res) => {
   // set hidden to false as not hidden articles should be returned
-  const options = {
-    hidden: false,
-  };
+  const options = {};
 
   // get query parameters
   const { page, limit, query, topic, createdBy } = req.query;

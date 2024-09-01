@@ -8,6 +8,7 @@ import { deleteArticle } from "./delete.js";
 import { getBookmarks } from "./get-bookmarks.js";
 import { getArticles } from "./get-many.js";
 import { getArticle } from "./get.js";
+import { toggleArticleHidden } from "./toggle-hidden.js";
 import { updateArticle } from "./update.js";
 
 export const articlesRouter = Router();
@@ -43,4 +44,9 @@ articlesRouter.delete(
   "/:id",
   authMiddleware(USER_ROLES.admin, USER_ROLES.user, USER_ROLES.user_writer),
   deleteArticle
+);
+articlesRouter.post(
+  "/toggle-hidden/:id",
+  authMiddleware(USER_ROLES.admin),
+  toggleArticleHidden
 );
