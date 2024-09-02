@@ -52,6 +52,9 @@ mongoose
     mongoBucket = new mongoose.mongo.GridFSBucket(mongoose.connection.db, {
       bucketName: "images",
     });
+    const b = new mongoose.mongo.GridFSBucket(mongoose.connection.db, {
+      bucketName: "images",
+    });
 
     const port = process.env.PORT;
     app.listen(port, () => {

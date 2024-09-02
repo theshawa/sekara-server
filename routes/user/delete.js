@@ -1,7 +1,7 @@
+import { deleteAsset } from "../../helpers/assets.js";
 import { ArticleModel } from "../../models/article.js";
 import { CommentModel } from "../../models/comment.js";
 import { UserModel } from "../../models/user.js";
-import { mongoBucket } from "../../server.js";
 
 export const deleteUser = async (req, res) => {
   // create user model instance

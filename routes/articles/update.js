@@ -33,11 +33,14 @@ export const updateArticle = async (req, res) => {
   }
 
   let deleteImage = null;
-  if (featuredImage === null || typeof featuredImage === "string") {
-    if (article.featuredImage && featuredImage === null) {
+  if (featuredImage !== undefined) {
+    // coverImage is not changed or coverImage is removed
+    if (featuredImage === "null") {
       deleteImage = article.featuredImage;
+      article.featuredImage = null;
+    } else {
+      article.featuredImage = featuredImage;
     }
-    article.featuredImage = featuredImage;
   } else {
     deleteImage = article.featuredImage;
     if (req.file) {
