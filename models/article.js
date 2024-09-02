@@ -51,6 +51,10 @@ export const ArticleSchema = new mongoose.Schema({
       ref: "User",
     },
   ],
+  featuredImage: {
+    type: mongoose.Schema.Types.ObjectId,
+    default: null,
+  },
 });
 
 export const ArticleModel = mongoose.model("Article", ArticleSchema);

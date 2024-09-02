@@ -7,6 +7,7 @@ import express from "express";
 import mongoose from "mongoose";
 import { errorHanlder } from "./middlewares/error-handler.js";
 import { articlesRouter } from "./routes/articles/index.js";
+import { assetsRouter } from "./routes/assets/index.js";
 import { commentsRouter } from "./routes/comments/index.js";
 import { topicsRouter } from "./routes/topics/index.js";
 import { userRouter } from "./routes/user/index.js";
@@ -35,10 +36,12 @@ app.use("/user", userRouter);
 app.use("/topics", topicsRouter);
 app.use("/articles", articlesRouter);
 app.use("/comments", commentsRouter);
+app.use("/assets", assetsRouter);
 
 // error handler middleware to catch all errors
 app.use(errorHanlder);
 
+export let mongoBucket;
 // Database connection and server start
 const connectionString = process.env.ATLAS_URI || "";
 mongoose
@@ -46,6 +49,10 @@ mongoose
   .connect(connectionString)
   .then(() => {
     console.log("Database connected");
+    mongoBucket = new mongoose.mongo.GridFSBucket(mongoose.connection.db, {
+      bucketName: "images",
+    });
+
     const port = process.env.PORT;
     app.listen(port, () => {
       console.log(`Server is running on http://localhost:${port}`);

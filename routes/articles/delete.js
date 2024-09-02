@@ -2,6 +2,7 @@ import { AppError } from "../../lib/error.js";
 import { ArticleModel } from "../../models/article.js";
 import { CommentModel } from "../../models/comment.js";
 import { TopicModel } from "../../models/topic.js";
+import { mongoBucket } from "../../server.js";
 
 export const deleteArticle = async (req, res) => {
   const { id } = req.params;
@@ -19,6 +20,11 @@ export const deleteArticle = async (req, res) => {
 
   // delete comments
   await CommentModel.deleteMany({ article: currentArticle._id });
+
+  // delete featured image if exists
+  if (currentArticle.featuredImage) {
+    await mongoBucket.delete(currentArticle.featuredImage);
+  }
 
   // delete article
   await currentArticle.deleteOne();

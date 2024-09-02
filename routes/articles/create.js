@@ -1,9 +1,11 @@
+import fs from "fs";
 import Joi from "joi";
 import { USER_ROLES } from "../../globals.js";
 import { AppError } from "../../lib/error.js";
 import { ArticleModel } from "../../models/article.js";
 import { TopicModel } from "../../models/topic.js";
 import { UserModel } from "../../models/user.js";
+import { mongoBucket } from "../../server.js";
 
 // request body validation schema
 const bodySchema = Joi.object({
@@ -33,6 +35,28 @@ export const createArticle = async (req, res) => {
     topic: topicId,
     createdBy: req.user._id,
   });
+
+  if (req.file) {
+    let uploadStream = mongoBucket.openUploadStream(req.file.filename, {
+      metadata: {
+        type: "featuredImage",
+        article: article._id,
+        contentType: req.file.mimetype,
+      },
+      contentType: req.file.mimetype,
+    });
+
+    const readStream = fs.createReadStream(req.file.path);
+
+    await new Promise((resolve, reject) => {
+      readStream
+        .pipe(uploadStream)
+        .on("finish", resolve("successfull"))
+        .on("error", reject("error occured while creating stream"));
+    });
+
+    article.featuredImage = uploadStream.id;
+  }
 
   // if user is a regular user, upgrade to writer
   if (req.user.role === USER_ROLES.user) {

@@ -1,4 +1,5 @@
 import { Router } from "express";
+import { fileUpload } from "../../file-upload.js";
 import { USER_ROLES } from "../../globals.js";
 import { authMiddleware } from "../../middlewares/auth.js";
 import { bookmarkArticle } from "./bookmark.js";
@@ -23,11 +24,13 @@ articlesRouter.get(
 articlesRouter.post(
   "/create",
   authMiddleware(USER_ROLES.admin, USER_ROLES.user, USER_ROLES.user_writer),
+  fileUpload.single("featuredImage"),
   createArticle
 );
 articlesRouter.post(
   "/update/:id",
   authMiddleware(USER_ROLES.admin, USER_ROLES.user, USER_ROLES.user_writer),
+  fileUpload.single("featuredImage"),
   updateArticle
 );
 articlesRouter.post(
