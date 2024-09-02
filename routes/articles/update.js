@@ -1,9 +1,8 @@
-import fs from "fs";
 import Joi from "joi";
+import { deleteAsset, uploadAsset } from "../../helpers/assets.js";
 import { AppError } from "../../lib/error.js";
 import { ArticleModel } from "../../models/article.js";
 import { TopicModel } from "../../models/topic.js";
-import { mongoBucket } from "../../server.js";
 
 // request body validation schema
 const bodySchema = Joi.object({
@@ -42,30 +41,20 @@ export const updateArticle = async (req, res) => {
   } else {
     deleteImage = article.featuredImage;
     if (req.file) {
-      let uploadStream = mongoBucket.openUploadStream(req.file.filename, {
+      article.featuredImage = await uploadAsset({
+        filename: req.file.filename,
+        mimetype: req.file.mimetype,
+        path: req.file.path,
         metadata: {
           type: "featuredImage",
           article: article._id,
-          contentType: req.file.mimetype,
         },
-        contentType: req.file.mimetype,
       });
-
-      const readStream = fs.createReadStream(req.file.path);
-
-      await new Promise((resolve, reject) => {
-        readStream
-          .pipe(uploadStream)
-          .on("finish", resolve("successfull"))
-          .on("error", reject("error occured while creating stream"));
-      });
-
-      article.featuredImage = uploadStream.id;
     }
   }
 
   if (deleteImage) {
-    await mongoBucket.delete(deleteImage);
+    await deleteAsset(deleteImage);
   }
 
   article.title = title;

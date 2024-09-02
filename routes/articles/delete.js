@@ -23,7 +23,7 @@ export const deleteArticle = async (req, res) => {
 
   // delete featured image if exists
   if (currentArticle.featuredImage) {
-    await mongoBucket.delete(currentArticle.featuredImage);
+    await deleteAsset(currentArticle.featuredImage);
   }
 
   // delete article

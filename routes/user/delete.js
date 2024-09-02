@@ -20,7 +20,7 @@ export const deleteUser = async (req, res) => {
   const imageDeletePromises = userArticles
     .map((article) => article.featuredImage)
     .filter((im) => im !== null)
-    .map((id) => mongoBucket.delete(id));
+    .map((id) => deleteAsset(id));
   await Promise.all(imageDeletePromises);
 
   // delete user articles
