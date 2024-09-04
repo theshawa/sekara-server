@@ -6,4 +6,4 @@ export const USER_ROLES = {
   user_writer: "user:writer",
 };
 
-export const JWT_EXPIRATION = "1h";
+export const JWT_EXPIRATION = "1d";
