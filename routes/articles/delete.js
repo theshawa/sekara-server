@@ -2,7 +2,6 @@ import { deleteAsset } from "../../helpers/assets.js";
 import { AppError } from "../../lib/error.js";
 import { ArticleModel } from "../../models/article.js";
 import { CommentModel } from "../../models/comment.js";
-import { TopicModel } from "../../models/topic.js";
 
 export const deleteArticle = async (req, res) => {
   const { id } = req.params;
@@ -28,10 +27,6 @@ export const deleteArticle = async (req, res) => {
 
   // delete article
   await currentArticle.deleteOne();
-  await TopicModel.updateOne(
-    { _id: currentArticle.topic },
-    { $inc: { articles: -1 } }
-  );
 
   res.sendStatus(200);
 };

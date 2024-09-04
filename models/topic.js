@@ -11,10 +11,6 @@ export const TopicSchema = new mongoose.Schema({
     unique: true,
     lowercase: true,
   },
-  articles: {
-    type: Number,
-    default: 0,
-  },
   createdAt: {
     type: Date,
     default: Date.now,

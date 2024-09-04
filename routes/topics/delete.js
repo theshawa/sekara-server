@@ -1,4 +1,5 @@
 import { AppError } from "../../lib/error.js";
+import { ArticleModel } from "../../models/article.js";
 import { TopicModel } from "../../models/topic.js";
 
 export const deleteTopic = async (req, res) => {
@@ -11,7 +12,8 @@ export const deleteTopic = async (req, res) => {
   }
 
   // check if topic has articles
-  if (currentTopic.articles.length > 0) {
+  const articles = await ArticleModel.find({ topic: currentTopic._id });
+  if (articles.length > 0) {
     throw new AppError(400, "topic has articles");
   }
 
